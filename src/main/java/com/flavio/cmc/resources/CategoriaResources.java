@@ -3,28 +3,28 @@ package com.flavio.cmc.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flavio.cmc.domain.Categoria;
+import com.flavio.cmc.services.CategoriaServices;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResources {
 
-	@RequestMapping(method=RequestMethod.GET)
-	public List<Categoria> listar() {
-		
-		Categoria cat01 = new Categoria(1, "Informática");
-		Categoria cat02 = new Categoria(2, "Escritório");
-		Categoria cat03 = new Categoria(3, "Limpeza");
-		
-	    List<Categoria> lista = new ArrayList<>();
-	    lista.add(cat01);
-	    lista.add(cat02);
-	    lista.add(cat03);
+	@Autowired
+	private CategoriaServices servico;
+	
+	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	public ResponseEntity<?> localizar(@PathVariable Integer id) {
 				
-		return lista;
+		Categoria obj = servico.buscar(id);
+		return ResponseEntity.ok(obj);
+		
 	}
 }
