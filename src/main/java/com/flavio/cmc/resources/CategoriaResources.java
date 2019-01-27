@@ -22,9 +22,11 @@ public class CategoriaResources {
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	public ResponseEntity<?> localizar(@PathVariable Integer id) {
-				
+		
+		
 		Categoria obj = servico.buscar(id);
 		return ResponseEntity.ok(obj);
+	
 		
 	}
 }
