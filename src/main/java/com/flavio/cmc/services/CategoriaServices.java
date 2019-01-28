@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.flavio.cmc.domain.Categoria;
 import com.flavio.cmc.repositories.CategoriaRepository;
+import com.flavio.cmc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoriaServices {
@@ -16,7 +17,13 @@ public class CategoriaServices {
 	
 	public Categoria buscar(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		
+		
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Categoria não encontrada. ID: "+id
+					+" , Tipo: "+ Categoria.class.getName() )); 
+		
+		
+		
 	}
 	
 }
